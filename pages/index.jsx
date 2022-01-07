@@ -29,7 +29,8 @@ export default function Home({movies}) {
   )
 }
 
-//Esto se ejecuta en el servidor
+//Esto se ejecuta en el servidor y se recomienda hacer request
+//a API's externas, jamás a la api interna de NextJs
 export async function getServerSideProps() {
   try {
     await conectarDB()

@@ -4,11 +4,11 @@ const MovieSchema = new mongoose.Schema({
     title: {
         type: String,
         //Para requerir el titulo obligatoriamente
-        require: [true, "Titulo requerido"]
+        required: [true, "Titulo requerido"]
     },
     plot: {
         type: String,
-        require: [true, "Descripcion requerida"]
+        required: [true, "Descripcion requerida"]
     }
 })
 
