@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useState } from "react"
 
 const New = () => {
@@ -7,9 +8,10 @@ const New = () => {
         plot:''
     })
 
-    const [message, setMessage] = useState([
-        
-    ])
+    const [message, setMessage] = useState([])
+
+    //Método de NextJs, como el redirect o navigate de react
+    const router = useRouter()
 
     const handleChange = e => {
         const {value, name} = e.target
@@ -36,6 +38,21 @@ const New = () => {
 
             const data = await res.json()
             console.log(data)
+
+            if (!data.success){
+                for (const key in data.error.errors) {
+                    let error = data.error.errors[key]
+                    setMessage(oldMessage => [
+                        ...oldMessage,
+                        {message: error.message}
+                    ]
+                    )
+                }
+            }
+            else {
+                router.push('/')
+            }
+
         } catch (error) {
            console.log(error) 
         }
@@ -68,6 +85,11 @@ const New = () => {
                 <Link href="/">
                     <a className="btn btn-warning w-100 my-2">Volver</a>
                 </Link>
+                {
+                    message.map(({message}) => (
+                        <p key={message}>{message}</p>
+                    )) 
+                }
             </form>
         </div>
     )
